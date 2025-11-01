@@ -23,10 +23,7 @@ df = pd.read_csv("data/top10.csv")
 median_cost = df["Cost of Development"].median()
 df["Cost of Development"].fillna(median_cost, inplace = True)
 
-if "GOTY" in df.columns:
-    df["Color"] = df{"GOTY"].apply(lambda x: "gold" if x else "blue")
-else:
-    df["Color"] = "blue"
+df["Color"] = df{"GOTY"].apply(lambda x: "gold" if x == 1 else "blue")
 
 st.write(df.head())
 
