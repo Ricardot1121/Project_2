@@ -30,7 +30,7 @@ else:
 
 st.write(df.head())
 
-fig = px.bar(df, x = "Game Title", y = "Development Cost($)", color = "Color",
+fig = px.bar(df, x = "Development Cost($)", y = "Game Title", color = "Color",
              title = "Development Costs of Video Games",
              labels = {"Video Games": "Video Games", "Cost of Development": "Development Cost($)"},
              color_map = {"gold": "gold", "blue": "blue"])
