@@ -1,1 +1,58 @@
+import streamlit as st
+from pathlib import Path
+from PIL import Image, ImageOps
 
+st.title("Bio Page")
+
+# ---------- TODO: Replace with your own info ----------
+NAME = ""
+PROGRAM = ""
+INTRO = (
+    ""
+FUN_FACTS = [
+    "most expensive game(of all time)",
+    "other",
+    "other",
+]
+def find_photo(filename="photo(?).jpg"):
+    # Photo was saved in assets folder
+    try:
+        script_dir = Path(__file__).resolve().parent
+    except NameError:
+        script_dir = Path.cwd()
+ 
+    candidates = [
+        script_dir / "assets" / "photo(?).jpg",          # pages/assets/...
+        script_dir.parent / "assets" / "photo(?).jpg",   # root/assets/... (common)
+        Path("assets") / "photo(?).jpg",                 # cwd/assets/...
+    ]
+    for p in candidates:
+        if p.exists():
+            return str(p)
+    return None
+ 
+photo_src = find_photo("photo(?).jpg")  # Put a file in repo root or set a URL
+
+# ---------- Layout ----------
+col1, col2 = st.columns([1, 2], vertical_alignment="center") 
+
+with col1: 
+    if photo_src:
+        img = Image.open(photo_src)
+        img = ImageOps.exif_transpose(img)
+        st.image(img, caption=NAME, use_container_width=True)
+    else:
+        st.info( "📷 Place Ren_Photo.jpg inside an assets/ folder at the app root " 
+                "or update the path in find_photo()." )
+        
+with col2:
+    st.subheader(NAME)
+    st.write(PROGRAM)
+    st.write(INTRO)
+
+st.markdown("### Fun facts")
+for i, f in enumerate(FUN_FACTS, start=1):
+    st.write(f"- {f}")
+    
+st.divider()
+st.caption("Edit pages/1_Bio.py to customize this page.")
