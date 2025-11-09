@@ -87,6 +87,6 @@ fig_rating = px.pie(filtered_rating_df, names = "Rating Type", values = "Count",
                     title = "Positive vs Negative Reviews",
                     hole = 0.4, color = "Rating Type",
                     color_discrete_map = {"Positive Rating": "green", "Negative Rating": "red"},
-                    labels = {"Rating Type": "Rating Type", "Count": "Number of Reviews"]
+                    labels = {"Rating Type": "Rating Type", "Count": "Number of Reviews"})
 
 st.plotly_chart(fig_rating, use_container_width = True)
