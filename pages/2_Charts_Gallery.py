@@ -33,3 +33,22 @@ fig = px.bar(df, x = "Development Cost($)", y = "Game Title", color = "Color",
              color_map = {"gold": "gold", "blue": "blue"])
 
 st.plotly_chart(fig, use_container_width=True)
+
+sales_df = pd.read_csv("10saleshistory.csv")
+
+def convert_sales(value):
+    if isinstance(value, str) and "m" in value:
+        return float(value.replace("m", "")) * 1_000_000
+    return None
+
+for col in sales_df.columns[1:]:
+    sales_df[col] = sales_df[col].apply(convert_sales)
+
+sales_df_melted = salesdf.melt(id_vars = ["Video Games"], var_name = "Year", value_names = "Units Sold")
+
+fis_sales = px.line(sales_df_melted, x = "Year", y = "Units Sold", color = "Video Games",
+                    title = "Sales Over Time (2015 - 2024)",
+                    labels = {"Year": "Year", "Units Sold": "Units Sold"},
+                    hover_name = "Video Games", hover_data =["Units Sold"])
+
+st.plotly_chart(fig_sales, use_container_width = True)
