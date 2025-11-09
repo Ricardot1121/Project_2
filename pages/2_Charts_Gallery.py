@@ -34,7 +34,7 @@ fig = px.bar(df, x = "Development Cost($)", y = "Game Title", color = "Color",
 
 st.plotly_chart(fig, use_container_width=True)
 
-sales_df = pd.read_csv("10saleshistory.csv")
+sales_df = pd.read_csv("10salehistory.csv")
 
 def convert_sales(value):
     if isinstance(value, str) and "m" in value:
