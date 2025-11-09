@@ -35,6 +35,9 @@ fig_cost = px.bar(df, x = "Cost of Development", y = "Video Games", color = "Col
 
 st.plotly_chart(fig_cost, use_container_width=True)
 
+st.title("Video Game Sale History")
+st.caption("The amount of units each video game has sold since their release year.")
+
 sales_df = pd.read_csv("10salehistory.csv")
 
 def convert_sales(value):
@@ -45,16 +48,45 @@ def convert_sales(value):
 for col in sales_df.columns[1:]:
     sales_df[col] = sales_df[col].apply(convert_sales)
 
-sales_df_melted = salesdf.melt(id_vars = ["Video Games"], var_name = "Year", value_names = "Units Sold")
+sales_melted = sales_df.melt(id_vars = ["Video Games"], var_name = "Year", value_names = "Units Sold")
 
-year_options = sorted(sales_df_melted["Year"].unique())
+year_options = sorted(sales_melted["Year"].unique())
 selected_year = st.selectbox("Select Year", year_options)
 
-filtered_sales_df = sales_df_melted[sales_df_melted["Year"] == selected_year]
+filtered_sales_df = sales_melted[sales_melted["Year"] == selected_year]
 
-fis_sales = px.line(sales_df_melted, x = "Year", y = "Units Sold", color = "Video Games",
+fig_sales = px.line(filtered_sales_df, x = "Year", y = "Units Sold", color = "Video Games",
                     title = "Sales Over Time (2015 - 2024)",
                     labels = {"Year": "Year", "Units Sold": "Units Sold"},
                     hover_name = "Video Games", hover_data =["Units Sold"])
 
 st.plotly_chart(fig_sales, use_container_width = True)
+
+st.title("Ratings and Reviews")
+st.caption("The positive vs negative reviews best video game of each year (2015 - 2024).")
+
+rating_df = pd.read_csv("rating.csv")
+
+st.write(rating_df.head())
+
+rating_df["Rating"] = rating_df["Rating"].str.replace("%", "").astype(float)
+rating_df["Reviews"] = rating_df["Reviews"].astype(int)
+
+rating_df["Positive Rating"] = rating_df["Reviews"] * (rating_df["Rating"] / 100)
+rating_df["Negative Rating"] = rating_df["Reviews"] - rating_df["Positive Rating"]
+
+rating_melted = pd.melt(rating_df, id_vars = ["Video Games"], value_vars = ["Positive Rating", "Negative Rating"],
+                        var_name = "Rating Type", value_name = "Count")
+
+title_options = sorted(rating_melted["Video Games"].unique())
+selected_title = st.selectbox("Select Game", title_options)
+
+filtered_rating_df = rating_melted[rating_melted["Video Games"] == selected_title]
+
+fig_rating = px.pie(filtered_rating_df, names = "Rating Type", values = "Count",
+                    title = "Positive vs Negative Reviews",
+                    hole = 0.4, color = "Rating Type",
+                    color_discrete_map = {"Positive Rating": "green", "Negative Rating": "red"},
+                    labels = {"Rating Type": "Rating Type", "Count": "Number of Reviews"]
+
+st.plotly_chart(fig_rating, use_container_width = True)
