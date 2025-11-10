@@ -35,6 +35,34 @@ fig_cost = px.bar(df, x = "Cost of Development", y = "Video Games", color = "Col
 
 st.plotly_chart(fig_cost, use_container_width=True)
 
+statement1 = [
+    "The bar chart above helps answering our questions of whether or not a higher budget affects quality of the video game. It also happens to answer if those games have won GOTY(Game of the Year awards)."
+]
+
+read1 = [
+    "The x-axis of this chart indicates the cost of development of the listed video games.",
+    "The y-axis are the titles of the listed video games.",
+    "The color gold indicates if the game has won GOTY or blue if it has not."
+]
+
+insight1 = [
+    "",
+    "",
+    ""
+]
+
+st.markdown("### Statement:")
+for i, f in enumerate(statement1, start=1):
+    st.write(f"- {f}")
+
+st.markdown("### How to read this chart:")
+for i, f in enumerate(read1, start=1):
+    st.write(f"- {f}")
+
+st.markdown("### Observations/Insights:")
+for i, f in enumerate(insight1, start=1):
+    st.write(f"- {f}")
+
 st.title("Video Game Sale History")
 st.caption("The amount of units each video game has sold since their release year.")
 
