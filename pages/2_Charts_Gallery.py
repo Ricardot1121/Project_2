@@ -76,7 +76,7 @@ def convert_sales(value):
 for col in sales_df.columns[1:]:
     sales_df[col] = sales_df[col].apply(convert_sales)
 
-sales_melted = sales_df.melt(id_vars = ["Video Games"], var_name = "Year", value_names = "Units Sold")
+sales_melted = sales_df.melt(id_vars = ["Video Games"], var_name = "Year", value_name = "Units Sold")
 
 year_options = sorted(sales_melted["Year"].unique())
 selected_year = st.selectbox("Select Year", year_options)
@@ -89,6 +89,37 @@ fig_sales = px.line(filtered_sales_df, x = "Year", y = "Units Sold", color = "Vi
                     hover_name = "Video Games", hover_data =["Units Sold"])
 
 st.plotly_chart(fig_sales, use_container_width = True)
+
+
+statement2 = [
+    "The line chart above helps answering our questions of whether or not if consumers continue to purchase the game despite its age. And helps answer if DLC and subscriptions affects profits."
+]
+
+read2 = [
+    "The x-axis of this chart indicates the year the video games are released.",
+    "The y-axis helps visualize the amount of copies a video game has sold unil 2024.",
+    "The chart is not completely accurate due to limited information from their company.",
+    "The chart adds an additional video game each year rather than games released in the same year."
+]
+
+insight2 = [
+    "",
+    "",
+    ""
+]
+
+st.markdown("### Statement:")
+for i, f in enumerate(statement2, start=1):
+    st.write(f"- {f}")
+
+st.markdown("### How to read this chart:")
+for i, f in enumerate(read2, start=1):
+    st.write(f"- {f}")
+
+st.markdown("### Observations/Insights:")
+for i, f in enumerate(insight2, start=1):
+    st.write(f"- {f}")
+
 
 st.title("Ratings and Reviews")
 st.caption("The positive vs negative reviews best video game of each year (2015 - 2024).")
@@ -118,3 +149,32 @@ fig_rating = px.pie(filtered_rating_df, names = "Rating Type", values = "Count",
                     labels = {"Rating Type": "Rating Type", "Count": "Number of Reviews"})
 
 st.plotly_chart(fig_rating, use_container_width = True)
+
+statement3 = [
+    "The donut chart above helps answering our questions of if a higher budget increases player enjoyment. It also answers if the video games have won GOTY due to its quality and how downloadable content (DLC) may influence profitability."
+]
+
+read3 = [
+    "The infographic donut chart above shows how well-received the video games are by the public.",
+    "The color green indicates the proportion of positive reviews/ratings since each games' release.",
+    "The color red indicates the proportion of negative reviews/ratings since each games' release.",
+    "The data is compiled from IMDb and reflects audience ratings from across multiple platforms."
+]
+
+insight3 = [
+    "",
+    "",
+    ""
+]
+
+st.markdown("### Statement:")
+for i, f in enumerate(statement3, start=1):
+    st.write(f"- {f}")
+
+st.markdown("### How to read this chart:")
+for i, f in enumerate(read3, start=1):
+    st.write(f"- {f}")
+
+st.markdown("### Observations/Insights:")
+for i, f in enumerate(insight3, start=1):
+    st.write(f"- {f}")
